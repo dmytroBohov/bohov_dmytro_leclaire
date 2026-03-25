@@ -15,6 +15,9 @@ from dataclasses import dataclass
 # Append the "src" folder to sys.path.
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..", "src")))
 
+
+# ici on importe uniquement l'agent 7
+
 # from agents.team1.agent1 import Agent1
 # from agents.team2.agent2 import Agent2
 # from agents.team3.agent3 import Agent3
@@ -25,8 +28,9 @@ from agents.team7.agent7 import Agent7
 from pystk2_gymnasium.envs import STKRaceMultiEnv, AgentSpec
 from pystk2_gymnasium.definitions import CameraMode
 
+# on change le nombre d'equipes à 1
 MAX_TEAMS = 1
-MAX_STEPS = 200
+MAX_STEPS = 1000
 NB_RACES = 1
 
 # Get the current timestamp
@@ -100,6 +104,7 @@ def create_race():
 
     agents = []
     names = []
+    # on ajoute uniquement l'agent 7 dans la liste d'agents
 
     # agents.append(Agent1(env, path_lookahead=3))
     # agents.append(Agent2(env, path_lookahead=3))
@@ -118,8 +123,6 @@ def create_race():
 
 
 def single_race(env, agents, names, scores):
-    step_counter = 0
-
     obs, _ = env.reset()
     done = False
     steps = 0
@@ -157,8 +160,6 @@ def single_race(env, agents, names, scores):
         done = (nb_finished == 5)
         positions.append(pos)
         distances.append(dist)
-        print(f"step number : {step_counter}")
-        step_counter += 1
 
     pos_avg = np.array(positions).mean(axis=0)
     pos_std = np.array(positions).std(axis=0)
